@@ -123,18 +123,6 @@ public class CocktailsAndQuiz {
 		return list;
 	}
 
-	public List<String> getUnitok() {
-		Set<String> ret = new HashSet<String>();
-		for (Cocktail cocktail : mCocktails) {
-			for (Osszetevo o : cocktail.getOsszetevok()) {
-				ret.add(o.getUnit());
-			}
-		}
-		List<String> list = new ArrayList<String>(ret);
-		java.util.Collections.sort(list);
-		return list;
-	}
-
 	public List<String> getOsszetevoNevek() {
 		Set<String> ret = new HashSet<String>();
 		for (Cocktail cocktail : mCocktails) {
@@ -268,7 +256,7 @@ public class CocktailsAndQuiz {
 					JSONObject c1 = (JSONObject)array1.get(j);
 					Osszetevo o = new Osszetevo();
 					o.setMennyiseg(c1.get(Osszetevo.MENNYISEG).toString());
-					o.setUnit(c1.get(Osszetevo.UNIT).toString());
+//					o.setUnit(c1.get(Osszetevo.UNIT).toString());
 					o.setNev(c1.get(Osszetevo.NAME).toString());
 					osszetevok.add(o);
 				}
@@ -370,7 +358,7 @@ public class CocktailsAndQuiz {
 			for (Osszetevo osszetevo : cocktail.getOsszetevok()) {
 				JSONObject obj1 = new JSONObject();
 				obj1.put(Osszetevo.MENNYISEG, osszetevo.getMennyiseg());
-				obj1.put(Osszetevo.UNIT, osszetevo.getUnit());
+//				obj1.put(Osszetevo.UNIT, osszetevo.getUnit());
 				obj1.put(Osszetevo.NAME, osszetevo.getNev());
 				osszetevok.add(obj1);
 			}

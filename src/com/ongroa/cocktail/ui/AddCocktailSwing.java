@@ -93,13 +93,6 @@ implements ActionListener {
 				o.getCbMennyiseg().addItem(string);
 			}
 		}
-		l = mMain.getUnitok();
-		for (OsszetevoUi o : mOsszetevokUi) {
-			o.getCbUnit().addItem("");
-			for (String string : l) {
-				o.getCbUnit().addItem(string);
-			}
-		}
 		l = mMain.getOsszetevoNevek();
 		for (OsszetevoUi o : mOsszetevokUi) {
 			o.getCbName().addItem("");
@@ -156,20 +149,19 @@ implements ActionListener {
 
 		for (int i = 0; i < MAX_NOF_COCKTAILS; i++) {
 			JPanel panelCocktail = new JPanel();
-			panelCocktail.setLayout(new FlowLayout());
+			panelCocktail.setLayout(new FlowLayout(FlowLayout.LEFT));
 			JComboBox<String> cbMennyiseg = new JComboBox<String>();
 			cbMennyiseg.setEditable(editable);
 			JComboBox<String> cbUnit = new JComboBox<String>();
 			cbUnit.setEditable(editable);
 			JComboBox<String> cbName = new JComboBox<String>();
 			cbName.setEditable(editable);
-			OsszetevoUi osszetevoUi = new OsszetevoUi(cbMennyiseg, cbUnit, 
-					cbName);
+			OsszetevoUi osszetevoUi = new OsszetevoUi(cbMennyiseg, 	cbName);
 			panelCocktail.add(new JLabel(i+1+". összetevő: "));
 			panelCocktail.add(new JLabel(mMain.MENNYISEG));
 			panelCocktail.add(cbMennyiseg);
-			panelCocktail.add(new JLabel(mMain.UNIT));
-			panelCocktail.add(cbUnit);
+//			panelCocktail.add(new JLabel(mMain.UNIT));
+//			panelCocktail.add(cbUnit);
 			panelCocktail.add(new JLabel(mMain.NEV));
 			panelCocktail.add(cbName);
 			mOsszetevokUi.add(osszetevoUi);
@@ -219,10 +211,8 @@ implements ActionListener {
 		cbDisz.addItem("d");
 		cbFajta.addItem("e");
 		mOsszetevokUi.get(0).getCbMennyiseg().addItem("1");
-		mOsszetevokUi.get(0).getCbUnit().addItem("cl");
 		mOsszetevokUi.get(0).getCbName().addItem("n");
 		mOsszetevokUi.get(1).getCbMennyiseg().addItem("2");
-		mOsszetevokUi.get(1).getCbUnit().addItem("csepp");
 		mOsszetevokUi.get(1).getCbName().addItem("nn");
 	}
 
@@ -291,14 +281,11 @@ implements ActionListener {
 		cbFajta.setSelectedItem(cocktail.getFajta());
 		for (int i = 0; i < MAX_NOF_COCKTAILS; i++) {
 			mOsszetevokUi.get(i).getCbMennyiseg().setSelectedItem("");
-			mOsszetevokUi.get(i).getCbUnit().setSelectedItem("");
 			mOsszetevokUi.get(i).getCbName().setSelectedItem("");
 		}
 		for (int i = 0; i < cocktail.getOsszetevok().size(); i++) {
 			mOsszetevokUi.get(i).getCbMennyiseg().setSelectedItem(
 					cocktail.getOsszetevok().get(i).getMennyiseg());
-			mOsszetevokUi.get(i).getCbUnit().setSelectedItem(
-					cocktail.getOsszetevok().get(i).getUnit());
 			mOsszetevokUi.get(i).getCbName().setSelectedItem(
 					cocktail.getOsszetevok().get(i).getNev());
 		}
@@ -341,13 +328,9 @@ implements ActionListener {
 				! mOsszetevokUi.get(i).getCbName().getSelectedItem().
 				equals("") &&
 				! mOsszetevokUi.get(i).getCbMennyiseg().getSelectedItem().
-				equals("") &&
-				! mOsszetevokUi.get(i).getCbUnit().getSelectedItem().
 				equals("")) {
 			Osszetevo osszetevo = new Osszetevo();
 			osszetevo.setMennyiseg(mOsszetevokUi.get(i).getCbMennyiseg().
-					getSelectedItem().toString());
-			osszetevo.setUnit(mOsszetevokUi.get(i).getCbUnit().
 					getSelectedItem().toString());
 			osszetevo.setNev(mOsszetevokUi.get(i).getCbName().
 					getSelectedItem().toString());
@@ -369,13 +352,9 @@ implements ActionListener {
 				! mOsszetevokUi.get(i).getCbName().getSelectedItem().
 				equals("") &&
 				! mOsszetevokUi.get(i).getCbMennyiseg().getSelectedItem().
-				equals("") &&
-				! mOsszetevokUi.get(i).getCbUnit().getSelectedItem().
 				equals("")) {
 			Osszetevo osszetevo = new Osszetevo();
 			osszetevo.setMennyiseg(mOsszetevokUi.get(i).getCbMennyiseg().
-					getSelectedItem().toString());
-			osszetevo.setUnit(mOsszetevokUi.get(i).getCbUnit().
 					getSelectedItem().toString());
 			osszetevo.setNev(mOsszetevokUi.get(i).getCbName().
 					getSelectedItem().toString());
@@ -392,7 +371,6 @@ implements ActionListener {
 		cbFajta.setSelectedIndex(0);
 		for (int i = 0; i < MAX_NOF_COCKTAILS; i++) {
 			mOsszetevokUi.get(i).getCbMennyiseg().setSelectedIndex(0);
-			mOsszetevokUi.get(i).getCbUnit().setSelectedIndex(0);
 			mOsszetevokUi.get(i).getCbName().setSelectedIndex(0);
 		}
 	}

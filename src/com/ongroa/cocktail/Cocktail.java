@@ -121,12 +121,12 @@ public class Cocktail {
 		Set<String> s2 = new HashSet<String>();
 		for (int i = 0; i < o1.size(); i++) {
 			o = o1.get(i);
-			item = String.format("%s %s %s", 
-					o.getMennyiseg(), o.getUnit(), o.getNev());
+			item = String.format("%s %s", 
+					o.getMennyiseg(), o.getNev());
 			s1.add(item);
 			o = o2.get(i);
-			item = String.format("%s %s %s", 
-					o.getMennyiseg(), o.getUnit(), o.getNev());
+			item = String.format("%s %s", 
+					o.getMennyiseg(), o.getNev());
 			s2.add(item);
 		}
 		return s1.equals(s2);

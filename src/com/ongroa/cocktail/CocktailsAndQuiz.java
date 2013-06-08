@@ -55,6 +55,9 @@ public class CocktailsAndQuiz {
 		mCocktails = new ArrayList<Cocktail>();
 		mQuizCocktailIdxs = new ArrayList<Integer>();
 		mQuizCocktails = new ArrayList<Cocktail>();
+	}
+	
+	public void startGui() {
 		mUi = new UiSwing(this);
 	}
 
@@ -307,6 +310,13 @@ public class CocktailsAndQuiz {
 		String name = cocktail.getName();
 		if (! getNevek().contains(name)) {
 			mCocktails.add(cocktail);
+		}
+	}
+	
+	public void addCocktailAndWriteToFile(Cocktail cocktail) {
+		String name = cocktail.getName();
+		if (! getNevek().contains(name)) {
+			mCocktails.add(cocktail);
 			writeCocktailsToFile();
 		}
 	}
@@ -389,7 +399,8 @@ public class CocktailsAndQuiz {
 
 			@Override
 			public void run() {
-				new CocktailsAndQuiz();
+				CocktailsAndQuiz c = new CocktailsAndQuiz();
+				c.startGui();
 			}
 		});
 

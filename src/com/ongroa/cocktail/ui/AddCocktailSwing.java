@@ -168,7 +168,7 @@ implements ActionListener {
 			panelCocktail.add(new JLabel(i+1+". összetevő: "));
 			panelCocktail.add(new JLabel(mMain.MENNYISEG));
 			panelCocktail.add(cbMennyiseg);
-			panelCocktail.add(new JLabel(mMain.OSSZETEVO));
+			panelCocktail.add(new JLabel(mMain.UNIT));
 			panelCocktail.add(cbUnit);
 			panelCocktail.add(new JLabel(mMain.NEV));
 			panelCocktail.add(cbName);
@@ -249,14 +249,16 @@ implements ActionListener {
 			}
 		}
 		if (source == buttonDelete) {
-			int ret = JOptionPane.showConfirmDialog(this,
-					"Are you sure you want to delete this cocktail?",
-					"Warning",
-					JOptionPane.YES_NO_OPTION);
-			if (ret == 0) {
-				mMain.removeCocktail(cbName.getSelectedItem().toString());
+			if (! cbName.getSelectedItem().toString().equals("")) {
+				int ret = JOptionPane.showConfirmDialog(this,
+						"Are you sure you want to delete this cocktail?",
+						"Warning",
+						JOptionPane.YES_NO_OPTION);
+				if (ret == 0) {
+					mMain.removeCocktail(cbName.getSelectedItem().toString());
+					this.dispose();
+				}
 			}
-			this.dispose();
 		}
 		if (source == buttonClose) {
 			this.dispose();
@@ -271,22 +273,27 @@ implements ActionListener {
 				toString());
 		if (cocktail == null) {
 			cocktail = new Cocktail();
-			cocktail.setAlapszesz("");
-			cocktail.setPohar("");
-			cocktail.setDiszites("");
-			cocktail.setFajta("");
-			for (int i = 0; i < MAX_NOF_COCKTAILS; i++) {
-				Osszetevo osszetevo = new Osszetevo();
-				osszetevo.setMennyiseg("");
-				osszetevo.setUnit("");
-				osszetevo.setNev("");
-				cocktail.addOsszetevo(osszetevo);
-			}
+			//			cocktail.setAlapszesz("");
+			//			cocktail.setPohar("");
+			//			cocktail.setDiszites("");
+			//			cocktail.setFajta("");
+			//			for (int i = 0; i < MAX_NOF_COCKTAILS; i++) {
+			//				Osszetevo osszetevo = new Osszetevo();
+			//				osszetevo.setMennyiseg("");
+			//				osszetevo.setUnit("");
+			//				osszetevo.setNev("");
+			//				cocktail.addOsszetevo(osszetevo);
+			//			}
 		}
 		cbAlapszesz.setSelectedItem(cocktail.getAlapszesz());
 		cbPohar.setSelectedItem(cocktail.getPohar());
 		cbDisz.setSelectedItem(cocktail.getDiszites());
 		cbFajta.setSelectedItem(cocktail.getFajta());
+		for (int i = 0; i < MAX_NOF_COCKTAILS; i++) {
+			mOsszetevokUi.get(i).getCbMennyiseg().setSelectedItem("");
+			mOsszetevokUi.get(i).getCbUnit().setSelectedItem("");
+			mOsszetevokUi.get(i).getCbName().setSelectedItem("");
+		}
 		for (int i = 0; i < cocktail.getOsszetevok().size(); i++) {
 			mOsszetevokUi.get(i).getCbMennyiseg().setSelectedItem(
 					cocktail.getOsszetevok().get(i).getMennyiseg());
@@ -304,6 +311,7 @@ implements ActionListener {
 				! cbDisz.getSelectedItem().equals("") &&
 				! cbFajta.getSelectedItem().equals("")) {
 			Cocktail cocktail = getCocktailFromGui();
+			// modify
 			if (mMain.getNevek().contains(cbName.getSelectedItem().toString())) { 
 				int ret = JOptionPane.showConfirmDialog(this,
 						"Are you sure you want to modify this cocktail?",
@@ -311,10 +319,13 @@ implements ActionListener {
 						JOptionPane.YES_NO_OPTION);
 				if (ret == 0) {
 					mMain.removeCocktail(cbName.getSelectedItem().toString());
+					mMain.addCocktailAndWriteToFile(cocktail);
 				}
+				// add
+			} else {
+				mMain.addCocktailAndWriteToFile(cocktail);
+				this.dispose();
 			}
-			mMain.addCocktail(cocktail);
-			this.dispose();
 		}
 	}
 

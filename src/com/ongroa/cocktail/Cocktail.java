@@ -1,7 +1,9 @@
 package com.ongroa.cocktail;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Cocktail {
 
@@ -31,7 +33,7 @@ public class Cocktail {
 		this.diszites = d;
 		this.fajta = f;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
@@ -81,7 +83,10 @@ public class Cocktail {
 	}
 
 	public void addOsszetevo(Osszetevo o) {
-		osszetevok.add(o);
+		String name = o.getNev();
+		if (! getNevek().contains(name)) {
+			osszetevok.add(o);
+		}
 	}
 
 	public Osszetevo getOsszetevo(String name) {
@@ -107,9 +112,34 @@ public class Cocktail {
 
 	private boolean isOsszetevokEquals(List<Osszetevo> o1, 
 			List<Osszetevo> o2) {
-		return true;
+		String item = null;
+		Osszetevo o = null;
+		if (o1 == null) return false;
+		if (o2 == null) return false;
+		if (o1.size() != o2.size()) return false;
+		Set<String> s1 = new HashSet<String>();
+		Set<String> s2 = new HashSet<String>();
+		for (int i = 0; i < o1.size(); i++) {
+			o = o1.get(i);
+			item = String.format("%s %s %s", 
+					o.getMennyiseg(), o.getUnit(), o.getNev());
+			s1.add(item);
+			o = o2.get(i);
+			item = String.format("%s %s %s", 
+					o.getMennyiseg(), o.getUnit(), o.getNev());
+			s2.add(item);
+		}
+		return s1.equals(s2);
 	}
 	
+	private List<String> getNevek() {
+		List<String> ret = new ArrayList<String>();
+		for (Osszetevo o : osszetevok) {
+			ret.add(o.getNev());
+		}
+		return ret;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == null) return false;

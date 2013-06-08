@@ -4,12 +4,12 @@ import java.util.Set;
 
 import junit.framework.Assert;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.ongroa.cocktail.Cocktail;
 import com.ongroa.cocktail.CocktailsAndQuiz;
 import com.ongroa.cocktail.Osszetevo;
-
 
 public class CocktailsTest {
 
@@ -33,23 +33,23 @@ public class CocktailsTest {
 
 		o1 = new Osszetevo("mennyiseg1", "unit1", "name1");
 		o2 = new Osszetevo("mennyiseg1", "unit1", "name1");
-		__assert(true, o1, o2);
+		assertObjectsEqual(true, o1, o2);
 		
 		o1 = new Osszetevo("mennyiseg1", "unit1", "name1");
 		o2 = new Osszetevo("menniseg2", "unit2", "name2");
-		__assert(false, o1, o2);
+		assertObjectsEqual(false, o1, o2);
 		
 		o1 = new Osszetevo("mennyiseg1", "unit1", "name1");
 		o2 = new Osszetevo("menniseg2", "unit1", "name1");
-		__assert(false, o1, o2);
+		assertObjectsEqual(false, o1, o2);
 		
 		o1 = new Osszetevo("mennyiseg1", "unit1", "name1");
 		o2 = new Osszetevo("menniseg1", "unit2", "name1");
-		__assert(false, o1, o2);
+		assertObjectsEqual(false, o1, o2);
 		
 		o1 = new Osszetevo("mennyiseg1", "unit1", "name1");
 		o2 = new Osszetevo("menniseg1", "unit1", "");
-		__assert(false, o1, o2);
+		assertObjectsEqual(false, o1, o2);
 	}
 
 	@Test
@@ -61,47 +61,47 @@ public class CocktailsTest {
 		c1.addOsszetevo(new Osszetevo("mennyiseg1", "unit1", "name1"));
 		c2 = new Cocktail("n1", "a1", "p1", "d1", "f1");
 		c2.addOsszetevo(new Osszetevo("mennyiseg1", "unit1", "name1"));
-		__assert(true, c1, c2);
+		assertObjectsEqual(true, c1, c2);
 
 		c1 = new Cocktail("n1", "a1", "p1", "d1", "f1");
 		c1.addOsszetevo(new Osszetevo("mennyiseg1", "unit1", "name1"));
 		c1.addOsszetevo(new Osszetevo("mennyiseg2", "unit2", "name2"));
 		c2 = new Cocktail("n1", "a1", "p1", "d1", "f1");
-		c1.addOsszetevo(new Osszetevo("mennyiseg2", "unit2", "name2"));
+		c2.addOsszetevo(new Osszetevo("mennyiseg2", "unit2", "name2"));
 		c2.addOsszetevo(new Osszetevo("mennyiseg1", "unit1", "name1"));
-		__assert(true, c1, c2);
+		assertObjectsEqual(true, c1, c2);
 
 		c1 = new Cocktail("n1", "a1", "p1", "d1", "f1");
 		c1.addOsszetevo(new Osszetevo("mennyiseg1", "unit1", "name1"));
 		c1.addOsszetevo(new Osszetevo("mennyiseg1", "unit1", "name1"));
 		c2 = new Cocktail("n1", "a1", "p1", "d1", "f1");
 		c2.addOsszetevo(new Osszetevo("mennyiseg1", "unit1", "name1"));
-		__assert(true, c1, c2);
+		assertObjectsEqual(true, c1, c2);
 
 		c1 = new Cocktail("n1", "a1", "p1", "d1", "f1");
 		c1.addOsszetevo(new Osszetevo("mennyiseg1", "unit1", "name1"));
 		c1.addOsszetevo(new Osszetevo("mennyiseg2", "unit2", "name2"));
 		c2 = new Cocktail("n1", "a1", "p1", "d1", "f1");
 		c2.addOsszetevo(new Osszetevo("mennyiseg1", "unit1", "name1"));
-		c1.addOsszetevo(new Osszetevo("mennyiseg2", "unit2", "name2"));
-		__assert(true, c1, c2);
+		c2.addOsszetevo(new Osszetevo("mennyiseg2", "unit2", "name2"));
+		assertObjectsEqual(true, c1, c2);
 
 		c1 = new Cocktail("n1", "a1", "p1", "d1", "f1");
 		c1.addOsszetevo(new Osszetevo("mennyiseg1", "unit1", "name1"));
 		c2 = new Cocktail("n1", "a2", "p1", "d1", "f1");
 		c2.addOsszetevo(new Osszetevo("mennyiseg1", "unit1", "name1"));
-		__assert(false, c1, c2);
+		assertObjectsEqual(false, c1, c2);
 
 		c1 = new Cocktail("n1", "a1", "p1", "d1", "f1");
 		c1.addOsszetevo(new Osszetevo("mennyiseg1", "unit1", "name1"));
 		c2 = new Cocktail("n1", "a1", "p1", "d1", "f1");
 		c2.addOsszetevo(new Osszetevo("mennyiseg2", "unit1", "name1"));
-		__assert(false, c1, c2);
+		assertObjectsEqual(false, c1, c2);
 
 		c1 = new Cocktail("n1", "a1", "p1", "d1", "f1");
 		c2 = new Cocktail("n1", "a1", "p1", "d1", "f1");
 		c2.addOsszetevo(new Osszetevo("mennyiseg2", "unit2", "name2"));
-		__assert(false, c1, c2);
+		assertObjectsEqual(false, c1, c2);
 
 		c1 = new Cocktail("n1", "a1", "p1", "d1", "f1");
 		c1.addOsszetevo(new Osszetevo("mennyiseg1", "unit1", "name1"));
@@ -109,22 +109,22 @@ public class CocktailsTest {
 		c1.addOsszetevo(new Osszetevo("mennyiseg3", "unit3", "name3"));
 		c2 = new Cocktail("n1", "a1", "p1", "d1", "f1");
 		c2.addOsszetevo(new Osszetevo("mennyiseg1", "unit1", "name1"));
-		c1.addOsszetevo(new Osszetevo("mennyiseg2", "unit2", "name2"));
-		__assert(false, c1, c2);
+		c2.addOsszetevo(new Osszetevo("mennyiseg2", "unit2", "name2"));
+		assertObjectsEqual(false, c1, c2);
 
 		c1 = new Cocktail("n1", "a1", "p1", "d1", "f1");
 		c1.addOsszetevo(new Osszetevo("mennyiseg1", "unit1", "name1"));
 		c1.addOsszetevo(new Osszetevo("mennyiseg2", "unit2", "name2"));
 		c2 = new Cocktail("n1", "a1", "p1", "d1", "f1");
 		c2.addOsszetevo(new Osszetevo("mennyiseg1", "unit1", "name1"));
-		c1.addOsszetevo(new Osszetevo("mennyiseg2", "unit2", "name2"));
-		c1.addOsszetevo(new Osszetevo("mennyiseg3", "unit3", "name3"));
-		__assert(false, c1, c2);
+		c2.addOsszetevo(new Osszetevo("mennyiseg2", "unit2", "name2"));
+		c2.addOsszetevo(new Osszetevo("mennyiseg3", "unit3", "name3"));
+		assertObjectsEqual(false, c1, c2);
 
 	}
 	
 	@Test
-	public void test_addCocktail() {
+	public void test_add_cocktail_twice() {
 		Cocktail c1 = null;
 		CocktailsAndQuiz c = new CocktailsAndQuiz();
 		c1 = new Cocktail("n1", "a1", "p1", "d1", "f1");
@@ -134,7 +134,8 @@ public class CocktailsTest {
 		
 	}
 
-	private void __assert(boolean b, Object o1, Object o2) {
+	@Ignore
+	private void assertObjectsEqual(boolean b, Object o1, Object o2) {
 		String msgEquals = String.format("\n%s ==\n %s", o1, o2);
 		String msgNotEquals = String.format("\n%s !=\n %s", o1, o2);
 		if (b) {

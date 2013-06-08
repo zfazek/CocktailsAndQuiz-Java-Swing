@@ -23,6 +23,15 @@ public class Cocktail {
 		osszetevok = new ArrayList<Osszetevo>();
 	}
 
+	public Cocktail(String n, String a, String p, String d, String f) {
+		this();
+		this.name = n;
+		this.alapszesz = a;
+		this.pohar = p;
+		this.diszites = d;
+		this.fajta = f;
+	}
+	
 	public String getName() {
 		return name;
 	}
@@ -75,9 +84,19 @@ public class Cocktail {
 		osszetevok.add(o);
 	}
 
+	public Osszetevo getOsszetevo(String name) {
+		for (int i = 0; i < osszetevok.size(); i++) {
+			if (osszetevok.get(i).getNev().equals(name)) {
+				return osszetevok.get(i);
+			}
+		}
+		return null;
+	}
+
 	@Override
 	public String toString() {
-		String ret = String.format("Nev: %s, Alapszesz: %s, Pohar: %s, Diszites: %s, Fajta: %s\n",
+		String ret = String.format(
+				"Nev: %s, Alapszesz: %s, Pohar: %s, Diszites: %s, Fajta: %s\n",
 				name, alapszesz, pohar, diszites, fajta);
 		ret += "Osszetevok:\n";
 		for (Osszetevo o : osszetevok) {
@@ -86,9 +105,13 @@ public class Cocktail {
 		return ret;
 	}
 
+	private boolean isOsszetevokEquals(List<Osszetevo> o1, 
+			List<Osszetevo> o2) {
+		return true;
+	}
+	
 	@Override
 	public boolean equals(Object obj) {
-		boolean osszetevokEquals = true;
 		if (obj == null) return false;
 		if (obj == this) return true;
 		if (! (obj instanceof Cocktail)) return false;
@@ -97,6 +120,6 @@ public class Cocktail {
 				o.pohar.equals(this.pohar) &&
 				o.diszites.equals(this.diszites) &&
 				o.fajta.equals(this.fajta) &&
-				osszetevokEquals;
+				isOsszetevokEquals(o.getOsszetevok(), this.getOsszetevok());
 	}
 }

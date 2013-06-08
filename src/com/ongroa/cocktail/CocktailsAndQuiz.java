@@ -38,7 +38,7 @@ public class CocktailsAndQuiz {
 
 	private List<Cocktail> mCocktails;
 	private List<Cocktail> mQuizCocktails;
-	
+
 	public final String NEV = "Név:";
 	public final String POHAR = "Pohár:";
 	public final String ALAPSZESZ = "Alapszesz:";
@@ -191,7 +191,7 @@ public class CocktailsAndQuiz {
 	public void incNofGoodCocktails() {
 		mNofGoodCocktails++;
 	}
-	
+
 	public int getNofGoodAnswers() {
 		return mNofGoodAnswers;
 	}
@@ -203,7 +203,7 @@ public class CocktailsAndQuiz {
 	public void incNofGoodAnswers() {
 		mNofGoodAnswers++;
 	}
-	
+
 	public int getNofWrongAnswers() {
 		return mNofWrongAnswers;
 	}
@@ -215,7 +215,7 @@ public class CocktailsAndQuiz {
 	public void incNofWrongAnswers() {
 		mNofWrongAnswers++;
 	}
-	
+
 	public List<Integer> pickRandomCocktails() {
 		List<Integer> ret = new ArrayList<Integer>();
 		int n = 0;
@@ -275,13 +275,13 @@ public class CocktailsAndQuiz {
 			//			printCocktails();
 		}
 	} 
-	
+
 	public void addNewCocktail() {
 		parseCocktails();
 		setMode(ADD_MODE);
 		new AddCocktailSwing(this);
 	}
-	
+
 	public void startQuiz() {
 		parseCocktails();
 		setMode(QUIZ_MODE);
@@ -304,8 +304,11 @@ public class CocktailsAndQuiz {
 	}
 
 	public void addCocktail(Cocktail cocktail) {
-		mCocktails.add(cocktail);
-		writeCocktailsToFile();
+		String name = cocktail.getName();
+		if (! getNevek().contains(name)) {
+			mCocktails.add(cocktail);
+			writeCocktailsToFile();
+		}
 	}
 
 	public void addCocktailToQuiz(Cocktail cocktail) {
@@ -320,7 +323,7 @@ public class CocktailsAndQuiz {
 		mNofGoodCocktails = 0;
 		mNofWrongAnswers = 0;
 	}
-	
+
 	public Cocktail getCocktail(String name) {
 		if (name.equals("")) {
 			return null;
@@ -331,6 +334,16 @@ public class CocktailsAndQuiz {
 			}
 		}
 		return null;
+	}
+
+	public void removeCocktail(String name) {
+		for (int i = 0; i < mCocktails.size(); i++) {
+			if (mCocktails.get(i).getName().equals(name)) {
+				mCocktails.remove(i);
+			}
+		}
+		mCocktails.remove(getCocktail(name));
+		writeCocktailsToFile();
 	}
 
 	@SuppressWarnings("unchecked")

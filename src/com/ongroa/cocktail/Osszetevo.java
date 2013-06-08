@@ -10,6 +10,16 @@ public class Osszetevo {
 	private String unit;
 	private String nev;
 
+	public Osszetevo() {
+		
+	}
+	
+	public Osszetevo(String m, String u, String n) {
+		this.mennyiseg = m;
+		this.unit = u;
+		this.nev = n;
+	}
+	
 	public String getMennyiseg() {
 		return mennyiseg;
 	}

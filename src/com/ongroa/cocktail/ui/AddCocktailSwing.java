@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -38,6 +39,7 @@ implements ActionListener {
 	private JComboBox<String> cbFajta;
 	private JButton buttonClose;
 	private JButton buttonOk;
+	private JButton buttonDelete;
 	private JLabel labelIdx;
 	private JTextField textName;
 
@@ -191,6 +193,11 @@ implements ActionListener {
 		JPanel panelSouth = new JPanel();
 		FlowLayout layoutSouth = new FlowLayout(FlowLayout.RIGHT);
 		panelSouth.setLayout(layoutSouth);
+		if (mMain.getMode() == CocktailsAndQuiz.ADD_MODE) {
+			buttonDelete = new JButton("Delete");
+			panelSouth.add(buttonDelete);
+			buttonDelete.addActionListener(this);
+		}
 		buttonClose = new JButton("Close");
 		buttonClose.addActionListener(this);
 		buttonOk = new JButton("Ok");
@@ -241,6 +248,16 @@ implements ActionListener {
 				}
 			}
 		}
+		if (source == buttonDelete) {
+			int ret = JOptionPane.showConfirmDialog(this,
+					"Are you sure you want to delete this cocktail?",
+					"Warning",
+					JOptionPane.YES_NO_OPTION);
+			if (ret == 0) {
+				mMain.removeCocktail(cbName.getSelectedItem().toString());
+			}
+			this.dispose();
+		}
 		if (source == buttonClose) {
 			this.dispose();
 		}
@@ -281,40 +298,52 @@ implements ActionListener {
 	}
 
 	private void addNewCocktail() {
-		if (mMain.getNevek().contains(cbName.getSelectedItem().toString())) 
-			return;
 		if (! cbName.getSelectedItem().toString().equals("") &&
 				! cbAlapszesz.getSelectedItem().equals("") &&
 				! cbPohar.getSelectedItem().equals("") &&
 				! cbDisz.getSelectedItem().equals("") &&
 				! cbFajta.getSelectedItem().equals("")) {
-			Cocktail cocktail = new Cocktail();
-			cocktail.setName(cbName.getSelectedItem().toString());
-			cocktail.setAlapszesz(cbAlapszesz.getSelectedItem().toString());
-			cocktail.setPohar(cbPohar.getSelectedItem().toString());
-			cocktail.setDiszites(cbDisz.getSelectedItem().toString());
-			cocktail.setFajta(cbFajta.getSelectedItem().toString());
-			int i = 0;
-			while (i < MAX_NOF_COCKTAILS &&
-					! mOsszetevokUi.get(i).getCbName().getSelectedItem().
-					equals("") &&
-					! mOsszetevokUi.get(i).getCbMennyiseg().getSelectedItem().
-					equals("") &&
-					! mOsszetevokUi.get(i).getCbUnit().getSelectedItem().
-					equals("")) {
-				Osszetevo osszetevo = new Osszetevo();
-				osszetevo.setMennyiseg(mOsszetevokUi.get(i).getCbMennyiseg().
-						getSelectedItem().toString());
-				osszetevo.setUnit(mOsszetevokUi.get(i).getCbUnit().
-						getSelectedItem().toString());
-				osszetevo.setNev(mOsszetevokUi.get(i).getCbName().
-						getSelectedItem().toString());
-				cocktail.addOsszetevo(osszetevo);
-				i++;
+			Cocktail cocktail = getCocktailFromGui();
+			if (mMain.getNevek().contains(cbName.getSelectedItem().toString())) { 
+				int ret = JOptionPane.showConfirmDialog(this,
+						"Are you sure you want to modify this cocktail?",
+						"Warning",
+						JOptionPane.YES_NO_OPTION);
+				if (ret == 0) {
+					mMain.removeCocktail(cbName.getSelectedItem().toString());
+				}
 			}
 			mMain.addCocktail(cocktail);
 			this.dispose();
 		}
+	}
+
+	private Cocktail getCocktailFromGui() {
+		Cocktail cocktail = new Cocktail();
+		cocktail.setName(cbName.getSelectedItem().toString());
+		cocktail.setAlapszesz(cbAlapszesz.getSelectedItem().toString());
+		cocktail.setPohar(cbPohar.getSelectedItem().toString());
+		cocktail.setDiszites(cbDisz.getSelectedItem().toString());
+		cocktail.setFajta(cbFajta.getSelectedItem().toString());
+		int i = 0;
+		while (i < MAX_NOF_COCKTAILS &&
+				! mOsszetevokUi.get(i).getCbName().getSelectedItem().
+				equals("") &&
+				! mOsszetevokUi.get(i).getCbMennyiseg().getSelectedItem().
+				equals("") &&
+				! mOsszetevokUi.get(i).getCbUnit().getSelectedItem().
+				equals("")) {
+			Osszetevo osszetevo = new Osszetevo();
+			osszetevo.setMennyiseg(mOsszetevokUi.get(i).getCbMennyiseg().
+					getSelectedItem().toString());
+			osszetevo.setUnit(mOsszetevokUi.get(i).getCbUnit().
+					getSelectedItem().toString());
+			osszetevo.setNev(mOsszetevokUi.get(i).getCbName().
+					getSelectedItem().toString());
+			cocktail.addOsszetevo(osszetevo);
+			i++;
+		}
+		return cocktail;
 	}
 
 	private void addNewCocktailToQuiz() {

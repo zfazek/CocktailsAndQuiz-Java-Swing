@@ -45,19 +45,19 @@ implements ActionListener {
 		buttonExit = new JButton("Exit");
 		buttonExit.addActionListener(this);
 		FlowLayout layoutNorth = new FlowLayout(FlowLayout.LEFT);
+		FlowLayout layoutSouth = new FlowLayout(FlowLayout.RIGHT);
 		JPanel panelNorth = new JPanel();
 		panelNorth.setLayout(layoutNorth);
 		spinner = new JSpinner(model);
-		panelNorth.add(new JLabel("Kérdések száma:"));
+		panelNorth.add(new JLabel("Number of quiz questions:"));
 		panelNorth.add(spinner);
 		JPanel panelSouth = new JPanel();
-		panelSouth.setLayout(layoutNorth);
+		panelSouth.setLayout(layoutSouth);
 		panelSouth.add(buttonAdd);
 		panelSouth.add(buttonQuiz);
 		panelSouth.add(buttonExit);
 		add(panelNorth, BorderLayout.NORTH);
 		add(panelSouth, BorderLayout.SOUTH);
-		//		setBounds(10, 10, 300, 200);
 		pack();
 	}
 

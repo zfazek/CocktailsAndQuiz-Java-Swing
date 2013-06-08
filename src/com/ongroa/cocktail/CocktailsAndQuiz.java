@@ -288,6 +288,7 @@ public class CocktailsAndQuiz {
 		}
 	}
 
+	@SuppressWarnings("unused")
 	private void printQuizCocktails() {
 		for (Cocktail c : mQuizCocktails) {
 			System.out.println(c);
@@ -311,7 +312,7 @@ public class CocktailsAndQuiz {
 
 	public void addCocktailToQuiz(Cocktail cocktail) {
 		mQuizCocktails.add(cocktail);
-		printQuizCocktails();
+//		printQuizCocktails();
 	}
 
 	public void clearQuizCocktails() {

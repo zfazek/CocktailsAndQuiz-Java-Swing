@@ -17,7 +17,7 @@ import com.ongroa.cocktail.CocktailsAndQuiz;
 public class QuizResult extends JFrame {
 
 	private CocktailsAndQuiz mMain;
-	
+
 	public CocktailsAndQuiz getMain() {
 		return mMain;
 	}
@@ -53,9 +53,10 @@ public class QuizResult extends JFrame {
 			panel.add(new JLabel(""));
 			panel.add(new JLabel(""));
 
-			String name = quizCocktails.get(idx).getName();
+			Cocktail quizCocktail = quizCocktails.get(idx);
+			String name = quizCocktail.getName();
 			Cocktail refCocktail = mMain.getCocktail(name);
-			if (refCocktail.equals(quizCocktails.get(idx))) {
+			if (refCocktail.equals(quizCocktail)) {
 				mMain.incNofGoodCocktails();
 			}
 			panel.add(new JLabel(idx + 1 + "."));
@@ -65,7 +66,7 @@ public class QuizResult extends JFrame {
 			panel.add(new JLabel(mMain.ALAPSZESZ));
 			labelRef = new JLabel(refCocktail.getAlapszesz());
 			panel.add(labelRef);
-			answer = quizCocktails.get(idx).getAlapszesz();
+			answer = quizCocktail.getAlapszesz();
 			if (answer.equals("")) {
 				answer = String.format("%s", "---");
 			}
@@ -73,11 +74,11 @@ public class QuizResult extends JFrame {
 			panel.add(labelQuiz);
 			color = getColor(labelRef, labelQuiz);
 			labelQuiz.setForeground(color);
-			
+
 			panel.add(new JLabel(mMain.POHAR));
 			labelRef = new JLabel(refCocktail.getPohar());
 			panel.add(labelRef);
-			answer = quizCocktails.get(idx).getPohar();
+			answer = quizCocktail.getPohar();
 			if (answer.equals("")) {
 				answer = String.format("%s", "---");
 			}
@@ -85,11 +86,35 @@ public class QuizResult extends JFrame {
 			panel.add(labelQuiz);
 			color = getColor(labelRef, labelQuiz);
 			labelQuiz.setForeground(color);
-			
+
+			panel.add(new JLabel(""));
+			panel.add(new JLabel(""));
+			panel.add(new JLabel(""));
+
+			for (int c = 0; c < refCocktail.getOsszetevok().size(); c++) {
+				panel.add(new JLabel(mMain.MENNYISEG));
+				panel.add(new JLabel(refCocktail.getOsszetevok().get(c).getMennyiseg()));
+				if (quizCocktail.getOsszetevok().size() > c) {
+					panel.add(new JLabel(quizCocktail.getOsszetevok().get(c).getMennyiseg()));
+				} else {
+					panel.add(new JLabel("---"));
+				}
+				panel.add(new JLabel(mMain.NEV));
+				panel.add(new JLabel(refCocktail.getOsszetevok().get(c).getNev()));
+				if (quizCocktail.getOsszetevok().size() > c) {
+					panel.add(new JLabel(quizCocktail.getOsszetevok().get(c).getNev()));
+				} else {
+					panel.add(new JLabel("---"));
+				}
+				panel.add(new JLabel(""));
+				panel.add(new JLabel(""));
+				panel.add(new JLabel(""));
+			}
+
 			panel.add(new JLabel(mMain.DISZITES));
 			labelRef = new JLabel(refCocktail.getDiszites());
 			panel.add(labelRef);
-			answer = quizCocktails.get(idx).getDiszites();
+			answer = quizCocktail.getDiszites();
 			if (answer.equals("")) {
 				answer = String.format("%s", "---");
 			}
@@ -97,11 +122,11 @@ public class QuizResult extends JFrame {
 			panel.add(labelQuiz);
 			color = getColor(labelRef, labelQuiz);
 			labelQuiz.setForeground(color);
-			
+
 			panel.add(new JLabel(mMain.FAJTA));
 			labelRef = new JLabel(refCocktail.getFajta());
 			panel.add(labelRef);
-			answer = quizCocktails.get(idx).getFajta();
+			answer = quizCocktail.getFajta();
 			if (answer.equals("")) {
 				answer = String.format("%s", "---");
 			}
@@ -109,7 +134,7 @@ public class QuizResult extends JFrame {
 			panel.add(labelQuiz);
 			color = getColor(labelRef, labelQuiz);
 			labelQuiz.setForeground(color);
-			
+
 			panel.add(new JLabel(""));
 			panel.add(new JLabel(""));
 			panel.add(new JLabel(""));
@@ -120,7 +145,6 @@ public class QuizResult extends JFrame {
 		panel.add(new JLabel("Helyes válaszok:"));
 
 		panel.add(new JLabel(""));
-		System.out.println(mMain.getNofGoodCocktails());
 		String msg = String.format("%d/%d = %.2f%%",
 				mMain.getNofGoodCocktails(),
 				mMain.getNofQuizCocktails(),

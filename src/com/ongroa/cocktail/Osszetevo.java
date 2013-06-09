@@ -1,6 +1,6 @@
 package com.ongroa.cocktail;
 
-public class Osszetevo {
+public class Osszetevo implements Comparable<Osszetevo> {
 	
 	public static String MENNYISEG = "mennyiseg";
 	public static String UNIT = "unit";
@@ -36,7 +36,7 @@ public class Osszetevo {
 	
 	@Override
 	public String toString() {
-		String ret = String.format("\tMennyiseg: %s, Nev: %s\n",
+		String ret = String.format("\tÖsszetevő: %s %s\n",
 				mennyiseg, nev);
 		return ret;
 	}
@@ -50,4 +50,10 @@ public class Osszetevo {
 		return o.mennyiseg.equals(this.mennyiseg) &&
 				o.nev.equals(this.nev);
 	}
+
+	@Override
+	public int compareTo(Osszetevo o) {
+		return this.nev.compareToIgnoreCase(o.nev);
+	}
+
 }

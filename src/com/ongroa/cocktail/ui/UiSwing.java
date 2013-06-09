@@ -73,6 +73,7 @@ implements ActionListener {
 		}
 		if (source == buttonExit) {
 			this.dispose();
+			System.exit(0);
 		}
 	}
 

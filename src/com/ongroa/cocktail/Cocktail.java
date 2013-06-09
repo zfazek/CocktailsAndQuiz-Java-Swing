@@ -1,6 +1,7 @@
 package com.ongroa.cocktail;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -151,5 +152,11 @@ public class Cocktail {
 				o.diszites.equals(this.diszites) &&
 				o.fajta.equals(this.fajta) &&
 				isOsszetevokEquals(o.getOsszetevok(), this.getOsszetevok());
+	}
+
+	public List<Osszetevo> getOsszetevokSorted() {
+		List<Osszetevo> ret = new ArrayList<Osszetevo>(osszetevok);
+		Collections.sort(ret);
+		return ret;
 	}
 }

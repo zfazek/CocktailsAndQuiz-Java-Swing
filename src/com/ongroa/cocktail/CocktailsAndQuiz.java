@@ -68,7 +68,7 @@ public class CocktailsAndQuiz {
 			ret.add(cocktail.getName());
 		}
 		List<String> list = new ArrayList<String>(ret);
-		java.util.Collections.sort(list);
+		java.util.Collections.sort(list, new SortIgnoreCase());
 		return list;
 	}
 
@@ -78,7 +78,7 @@ public class CocktailsAndQuiz {
 			ret.add(cocktail.getAlapszesz());
 		}
 		List<String> list = new ArrayList<String>(ret);
-		java.util.Collections.sort(list);
+		java.util.Collections.sort(list, new SortIgnoreCase());
 		return list;
 	}
 
@@ -88,7 +88,7 @@ public class CocktailsAndQuiz {
 			ret.add(cocktail.getPohar());
 		}
 		List<String> list = new ArrayList<String>(ret);
-		java.util.Collections.sort(list);
+		java.util.Collections.sort(list, new SortIgnoreCase());
 		return list;
 	}
 
@@ -98,7 +98,7 @@ public class CocktailsAndQuiz {
 			ret.add(cocktail.getDiszites());
 		}
 		List<String> list = new ArrayList<String>(ret);
-		java.util.Collections.sort(list);
+		java.util.Collections.sort(list, new SortIgnoreCase());
 		return list;
 	}
 
@@ -108,7 +108,7 @@ public class CocktailsAndQuiz {
 			ret.add(cocktail.getFajta());
 		}
 		List<String> list = new ArrayList<String>(ret);
-		java.util.Collections.sort(list);
+		java.util.Collections.sort(list, new SortIgnoreCase());
 		return list;
 	}
 
@@ -120,7 +120,7 @@ public class CocktailsAndQuiz {
 			}
 		}
 		List<String> list = new ArrayList<String>(ret);
-		java.util.Collections.sort(list);
+		java.util.Collections.sort(list, new SortIgnoreCase());
 		return list;
 	}
 
@@ -132,7 +132,7 @@ public class CocktailsAndQuiz {
 			}
 		}
 		List<String> list = new ArrayList<String>(ret);
-		java.util.Collections.sort(list);
+		java.util.Collections.sort(list, new SortIgnoreCase());
 		return list;
 	}
 

@@ -160,8 +160,6 @@ implements ActionListener {
 			panelCocktail.add(new JLabel(i+1+". összetevő: "));
 			panelCocktail.add(new JLabel(mMain.MENNYISEG));
 			panelCocktail.add(cbMennyiseg);
-//			panelCocktail.add(new JLabel(mMain.UNIT));
-//			panelCocktail.add(cbUnit);
 			panelCocktail.add(new JLabel(mMain.NEV));
 			panelCocktail.add(cbName);
 			mOsszetevokUi.add(osszetevoUi);

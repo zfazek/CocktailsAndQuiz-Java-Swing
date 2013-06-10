@@ -99,10 +99,20 @@ public class Cocktail {
 		return null;
 	}
 
+	public List<String> getOsszetevokAsString() {
+		List<String> ret = new ArrayList<String>();
+		for (Osszetevo o : osszetevok) {
+			String item = String.format("%s %s", 
+					o.getMennyiseg(), o.getNev());
+			ret.add(item);
+		}
+		return ret;
+	}
+	
 	@Override
 	public String toString() {
 		String ret = String.format(
-				"Nev: %s, Alapszesz: %s, Pohar: %s, Diszites: %s, Fajta: %s\n",
+				"Nev: %s, \nAlapszesz: %s, \nPohar: %s, \nDiszites: %s, \nFajta: %s\n",
 				name, alapszesz, pohar, diszites, fajta);
 		ret += "Osszetevok:\n";
 		for (Osszetevo o : osszetevok) {
@@ -111,6 +121,16 @@ public class Cocktail {
 		return ret;
 	}
 
+	public void evaluateOsszetevok(Cocktail refCocktail) {
+		for (Osszetevo o : osszetevok) {
+			String quizOsszetevo = String.format("%s %s", 
+					o.getMennyiseg(), o.getNev());
+			if (refCocktail.getOsszetevokAsString().contains(quizOsszetevo)) {
+				o.setValid(true);
+			}
+		}
+	}
+	
 	private boolean isOsszetevokEquals(List<Osszetevo> o1, 
 			List<Osszetevo> o2) {
 		String item = null;

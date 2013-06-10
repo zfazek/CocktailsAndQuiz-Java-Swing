@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 
 import org.json.simple.JSONArray;
@@ -57,7 +56,7 @@ public class CocktailsAndQuiz {
 		mQuizCocktailIdxs = new ArrayList<Integer>();
 		mQuizCocktails = new ArrayList<Cocktail>();
 	}
-	
+
 	public void startGui() {
 		mUi = new UiSwing(this);
 	}
@@ -257,7 +256,7 @@ public class CocktailsAndQuiz {
 					JSONObject c1 = (JSONObject)array1.get(j);
 					Osszetevo o = new Osszetevo();
 					o.setMennyiseg(c1.get(Osszetevo.MENNYISEG).toString());
-//					o.setUnit(c1.get(Osszetevo.UNIT).toString());
+					//					o.setUnit(c1.get(Osszetevo.UNIT).toString());
 					o.setNev(c1.get(Osszetevo.NAME).toString());
 					osszetevok.add(o);
 				}
@@ -302,7 +301,7 @@ public class CocktailsAndQuiz {
 			mCocktails.add(cocktail);
 		}
 	}
-	
+
 	public void addCocktailAndWriteToFile(Cocktail cocktail) {
 		String name = cocktail.getName();
 		if (! getNevek().contains(name)) {
@@ -313,7 +312,7 @@ public class CocktailsAndQuiz {
 
 	public void addCocktailToQuiz(Cocktail cocktail) {
 		mQuizCocktails.add(cocktail);
-//		printQuizCocktails();
+		//		printQuizCocktails();
 	}
 
 	public void clearQuizCocktails() {
@@ -390,81 +389,44 @@ public class CocktailsAndQuiz {
 			if (refCocktail.equals(quizCocktail)) {
 				incNofGoodCocktails();
 			}
+
 			ref = refCocktail.getAlapszesz();
 			answer = quizCocktail.getAlapszesz();
-			if (answer.equals("")) {
-				answer = String.format("%s", "---");
-			}
-			setValid(ref, answer);
+			validate(ref, answer);
 
-			panel.add(new JLabel(POHAR));
-			ref = new JLabel(refCocktail.getPohar());
-			panel.add(ref);
+			ref = refCocktail.getPohar();
 			answer = quizCocktail.getPohar();
-			if (answer.equals("")) {
-				answer = String.format("%s", "---");
-			}
-			answer = new JLabel(answer);
-			panel.add(answer);
-			setValid(ref, answer);
-			answer.setForeground(color);
+			validate(ref, answer);
 
-//			panel.add(new JLabel(""));
-//			panel.add(new JLabel(""));
-//			panel.add(new JLabel(""));
-
-			for (int c = 0; c < refCocktail.getOsszetevok().size(); c++) {
-				panel.add(new JLabel(MENNYISEG));
-				panel.add(new JLabel(refCocktail.getOsszetevok().get(c).getMennyiseg()));
-				if (quizCocktail.getOsszetevok().size() > c) {
-					panel.add(new JLabel(quizCocktail.getOsszetevok().get(c).getMennyiseg()));
-				} else {
-					panel.add(new JLabel("---"));
-				}
-				panel.add(new JLabel(NEV));
-				panel.add(new JLabel(refCocktail.getOsszetevok().get(c).getNev()));
-				if (quizCocktail.getOsszetevok().size() > c) {
-					panel.add(new JLabel(quizCocktail.getOsszetevok().get(c).getNev()));
-				} else {
-					panel.add(new JLabel("---"));
-				}
-//				panel.add(new JLabel(""));
-//				panel.add(new JLabel(""));
-//				panel.add(new JLabel(""));
-			}
-
-			panel.add(new JLabel(DISZITES));
-			ref = new JLabel(refCocktail.getDiszites());
-			panel.add(ref);
+			ref = refCocktail.getDiszites();
 			answer = quizCocktail.getDiszites();
-			if (answer.equals("")) {
-				answer = String.format("%s", "---");
-			}
-			answer = new JLabel(answer);
-			panel.add(answer);
-			setValid(ref, answer);
-			answer.setForeground(color);
+			validate(ref, answer);
 
-			panel.add(new JLabel(FAJTA));
-			ref = new JLabel(refCocktail.getFajta());
-			panel.add(ref);
+			ref = refCocktail.getFajta();
 			answer = quizCocktail.getFajta();
-			if (answer.equals("")) {
-				answer = String.format("%s", "---");
-			}
-			answer = new JLabel(answer);
-			panel.add(answer);
-			setValid(ref, answer);
-			answer.setForeground(color);
-
-//			panel.add(new JLabel(""));
-//			panel.add(new JLabel(""));
-//			panel.add(new JLabel(""));
+			validate(ref, answer);
 		}
 		new QuizResult(this);
+		clearQuizCocktails();
 	}
 
-	private void setValid(String ref, String answer) {
+	public String getGoodCocktailsResult() {
+		return String.format("%d/%d = %.2f%%",
+				getNofGoodCocktails(),
+				getNofQuizCocktails(),
+				100.0 * getNofGoodCocktails() /
+				(getNofQuizCocktails()));
+	}
+
+	public String getGoodAnswersResult() {
+		return String.format("%d/%d = %.2f%%",
+				getNofGoodAnswers(),
+				getNofGoodAnswers()+getNofWrongAnswers(),
+				100.0 * getNofGoodAnswers() /
+				(getNofGoodAnswers()+getNofWrongAnswers()));
+	}
+
+	private void validate(String ref, String answer) {
 		if (ref.equals(answer)) {
 			incNofGoodAnswers();
 		} else {

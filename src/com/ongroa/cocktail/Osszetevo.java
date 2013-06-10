@@ -11,7 +11,7 @@ public class Osszetevo implements Comparable<Osszetevo> {
 	private boolean valid;
 
 	public Osszetevo() {
-		
+		valid = false;
 	}
 	
 	public Osszetevo(String m, String n) {

@@ -27,7 +27,6 @@ implements ActionListener {
 
 	private CocktailsAndQuiz mMain;
 	private int MAX_NOF_COCKTAILS = 9;
-	//	private int NOF_COCKTAILS = 0;
 	private int quizIndex;
 	private List<Integer> idxs;
 
@@ -47,6 +46,7 @@ implements ActionListener {
 		mMain = main;
 		mOsszetevokUi = new ArrayList<OsszetevoUi>();
 		mMain.setNofGoodAnswers(0);
+		mMain.setNofWrongAnswers(0);
 		mMain.setNofGoodCocktails(0);
 		quizIndex = 0;
 		createGui();
@@ -55,6 +55,7 @@ implements ActionListener {
 			idxs = mMain.pickRandomCocktails();
 			textName.setText(mMain.getCocktails().
 					get(idxs.get(quizIndex)).getName());
+//			System.out.println(mMain.getCocktails().get(idxs.get(quizIndex)));
 		}
 		pack();
 	}
@@ -197,21 +198,7 @@ implements ActionListener {
 
 		add(panelCenter, BorderLayout.CENTER);
 		add(panelSouth, BorderLayout.SOUTH);
-		//		addDummyValues();
 		pack();
-	}
-
-	@SuppressWarnings("unused")
-	private void addDummyValues() {
-		cbName.addItem("a");
-		cbAlapszesz.addItem("b");
-		cbPohar.addItem("c");
-		cbDisz.addItem("d");
-		cbFajta.addItem("e");
-		mOsszetevokUi.get(0).getCbMennyiseg().addItem("1");
-		mOsszetevokUi.get(0).getCbName().addItem("n");
-		mOsszetevokUi.get(1).getCbMennyiseg().addItem("2");
-		mOsszetevokUi.get(1).getCbName().addItem("nn");
 	}
 
 	@Override
@@ -232,6 +219,7 @@ implements ActionListener {
 					clearComboBoxes();
 					textName.setText(mMain.getCocktails().
 							get(idxs.get(quizIndex)).getName());
+//					System.out.println(mMain.getCocktails().get(idxs.get(quizIndex)));
 					labelIdx.setText(quizIndex + 1 + ". koktél");
 				}
 			}
@@ -261,17 +249,6 @@ implements ActionListener {
 				toString());
 		if (cocktail == null) {
 			cocktail = new Cocktail();
-			//			cocktail.setAlapszesz("");
-			//			cocktail.setPohar("");
-			//			cocktail.setDiszites("");
-			//			cocktail.setFajta("");
-			//			for (int i = 0; i < MAX_NOF_COCKTAILS; i++) {
-			//				Osszetevo osszetevo = new Osszetevo();
-			//				osszetevo.setMennyiseg("");
-			//				osszetevo.setUnit("");
-			//				osszetevo.setNev("");
-			//				cocktail.addOsszetevo(osszetevo);
-			//			}
 		}
 		cbAlapszesz.setSelectedItem(cocktail.getAlapszesz());
 		cbPohar.setSelectedItem(cocktail.getPohar());

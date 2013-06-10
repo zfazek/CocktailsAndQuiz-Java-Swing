@@ -8,6 +8,7 @@ public class Osszetevo {
 	
 	private String mennyiseg;
 	private String nev;
+	private boolean valid;
 
 	public Osszetevo() {
 		
@@ -34,6 +35,14 @@ public class Osszetevo {
 		this.nev = name;
 	}
 	
+	public boolean isValid() {
+		return valid;
+	}
+
+	public void setValid(boolean valid) {
+		this.valid = valid;
+	}
+
 	@Override
 	public String toString() {
 		String ret = String.format("\tMennyiseg: %s, Nev: %s\n",

@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 
 import org.json.simple.JSONArray;
@@ -359,7 +360,6 @@ public class CocktailsAndQuiz {
 			for (Osszetevo osszetevo : cocktail.getOsszetevok()) {
 				JSONObject obj1 = new JSONObject();
 				obj1.put(Osszetevo.MENNYISEG, osszetevo.getMennyiseg());
-//				obj1.put(Osszetevo.UNIT, osszetevo.getUnit());
 				obj1.put(Osszetevo.NAME, osszetevo.getNev());
 				osszetevok.add(obj1);
 			}
@@ -380,7 +380,96 @@ public class CocktailsAndQuiz {
 	}
 
 	public void evaluateQuiz() {
+		List<Cocktail> quizCocktails = getQuizCocktails();
+		String ref;
+		String answer;
+		for (int idx = 0; idx < quizCocktails.size(); idx++) {
+			Cocktail quizCocktail = quizCocktails.get(idx);
+			String name = quizCocktail.getName();
+			Cocktail refCocktail = getCocktail(name);
+			if (refCocktail.equals(quizCocktail)) {
+				incNofGoodCocktails();
+			}
+			ref = refCocktail.getAlapszesz();
+			answer = quizCocktail.getAlapszesz();
+			if (answer.equals("")) {
+				answer = String.format("%s", "---");
+			}
+			setValid(ref, answer);
+
+			panel.add(new JLabel(POHAR));
+			ref = new JLabel(refCocktail.getPohar());
+			panel.add(ref);
+			answer = quizCocktail.getPohar();
+			if (answer.equals("")) {
+				answer = String.format("%s", "---");
+			}
+			answer = new JLabel(answer);
+			panel.add(answer);
+			setValid(ref, answer);
+			answer.setForeground(color);
+
+//			panel.add(new JLabel(""));
+//			panel.add(new JLabel(""));
+//			panel.add(new JLabel(""));
+
+			for (int c = 0; c < refCocktail.getOsszetevok().size(); c++) {
+				panel.add(new JLabel(MENNYISEG));
+				panel.add(new JLabel(refCocktail.getOsszetevok().get(c).getMennyiseg()));
+				if (quizCocktail.getOsszetevok().size() > c) {
+					panel.add(new JLabel(quizCocktail.getOsszetevok().get(c).getMennyiseg()));
+				} else {
+					panel.add(new JLabel("---"));
+				}
+				panel.add(new JLabel(NEV));
+				panel.add(new JLabel(refCocktail.getOsszetevok().get(c).getNev()));
+				if (quizCocktail.getOsszetevok().size() > c) {
+					panel.add(new JLabel(quizCocktail.getOsszetevok().get(c).getNev()));
+				} else {
+					panel.add(new JLabel("---"));
+				}
+//				panel.add(new JLabel(""));
+//				panel.add(new JLabel(""));
+//				panel.add(new JLabel(""));
+			}
+
+			panel.add(new JLabel(DISZITES));
+			ref = new JLabel(refCocktail.getDiszites());
+			panel.add(ref);
+			answer = quizCocktail.getDiszites();
+			if (answer.equals("")) {
+				answer = String.format("%s", "---");
+			}
+			answer = new JLabel(answer);
+			panel.add(answer);
+			setValid(ref, answer);
+			answer.setForeground(color);
+
+			panel.add(new JLabel(FAJTA));
+			ref = new JLabel(refCocktail.getFajta());
+			panel.add(ref);
+			answer = quizCocktail.getFajta();
+			if (answer.equals("")) {
+				answer = String.format("%s", "---");
+			}
+			answer = new JLabel(answer);
+			panel.add(answer);
+			setValid(ref, answer);
+			answer.setForeground(color);
+
+//			panel.add(new JLabel(""));
+//			panel.add(new JLabel(""));
+//			panel.add(new JLabel(""));
+		}
 		new QuizResult(this);
+	}
+
+	private void setValid(String ref, String answer) {
+		if (ref.equals(answer)) {
+			incNofGoodAnswers();
+		} else {
+			incNofWrongAnswers();
+		}
 	}
 
 	public static void main(String[] args) {

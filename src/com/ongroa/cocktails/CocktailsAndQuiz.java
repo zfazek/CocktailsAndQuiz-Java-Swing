@@ -1,36 +1,31 @@
-package com.ongroa.cocktail;
+package com.ongroa.cocktails;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import javax.swing.SwingUtilities;
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
-import com.ongroa.cocktail.ui.AddCocktailSwing;
-import com.ongroa.cocktail.ui.QuizResult;
-import com.ongroa.cocktail.ui.UiSwing;
+public class CocktailsAndQuiz implements Serializable {
 
-public class CocktailsAndQuiz {
+	private static final long serialVersionUID = -3351170948647535552L;
 
-	private final String fileName = "cocktails.txt";
-
-	@SuppressWarnings("unused")
-	private UiSwing mUi;
+	private String fileName;
+	
 	private int mMode;
 
 	private int mNofQuizCocktails = 1;
+	private final int maxQuestions = 10;
 	private int mNofGoodCocktails;
 	private int mNofGoodAnswers;
 	private int mNofWrongAnswers;
@@ -52,15 +47,19 @@ public class CocktailsAndQuiz {
 	public static final int QUIZ_MODE = 1;
 
 	public CocktailsAndQuiz() {
+		init();
+	}
+	
+	public void init() {
 		mCocktails = new ArrayList<Cocktail>();
 		mQuizCocktailIdxs = new ArrayList<Integer>();
 		mQuizCocktails = new ArrayList<Cocktail>();
 	}
 
-	public void startGui() {
-		mUi = new UiSwing(this);
+	public void setFileName(String name) {
+		fileName = name;
 	}
-
+	
 	public List<String> getNevek() {
 		Set<String> ret = new HashSet<String>();
 		for (Cocktail cocktail : mCocktails) {
@@ -171,6 +170,10 @@ public class CocktailsAndQuiz {
 		this.mQuizCocktails = mQuizCocktails;
 	}
 
+	public int getMaxQuestions() {
+		return maxQuestions;
+	}
+
 	public int getNofGoodCocktails() {
 		return mNofGoodCocktails;
 	}
@@ -222,14 +225,16 @@ public class CocktailsAndQuiz {
 		return ret;
 	}
 
-	public void parseCocktails() {
+	public void parseCocktails(BufferedReader reader) {
 		mCocktails.clear(); 
 		Object obj = null;
 		JSONParser parser = new JSONParser();
 		try {
-			obj = parser.parse(new FileReader(fileName));
-		} catch (ParseException e) {
-			e.printStackTrace();
+			try {
+				obj = parser.parse(reader);
+			} catch (org.json.simple.parser.ParseException e) {
+				e.printStackTrace();
+			}
 		} catch (FileNotFoundException e) {
 			File f = new File(fileName);
 			try {
@@ -256,7 +261,6 @@ public class CocktailsAndQuiz {
 					JSONObject c1 = (JSONObject)array1.get(j);
 					Osszetevo o = new Osszetevo();
 					o.setMennyiseg(c1.get(Osszetevo.MENNYISEG).toString());
-					//					o.setUnit(c1.get(Osszetevo.UNIT).toString());
 					o.setNev(c1.get(Osszetevo.NAME).toString());
 					osszetevok.add(o);
 				}
@@ -266,20 +270,6 @@ public class CocktailsAndQuiz {
 			//			printCocktails();
 		}
 	} 
-
-	public void addNewCocktail() {
-		parseCocktails();
-		setMode(ADD_MODE);
-		new AddCocktailSwing(this);
-	}
-
-	public void startQuiz() {
-		parseCocktails();
-		setMode(QUIZ_MODE);
-		new AddCocktailSwing(this);
-	}
-
-
 
 	@SuppressWarnings("unused")
 	private void printCocktails() {
@@ -306,13 +296,13 @@ public class CocktailsAndQuiz {
 		String name = cocktail.getName();
 		if (! getNevek().contains(name)) {
 			mCocktails.add(cocktail);
-			writeCocktailsToFile();
+			writeCocktailsToFile(fileName);
 		}
 	}
 
 	public void addCocktailToQuiz(Cocktail cocktail) {
 		mQuizCocktails.add(cocktail);
-		//		printQuizCocktails();
+		//printQuizCocktails();
 	}
 
 	public void clearQuizCocktails() {
@@ -342,11 +332,11 @@ public class CocktailsAndQuiz {
 			}
 		}
 		mCocktails.remove(getCocktail(name));
-		writeCocktailsToFile();
+		writeCocktailsToFile(fileName);
 	}
 
 	@SuppressWarnings("unchecked")
-	private void writeCocktailsToFile() {
+	private void writeCocktailsToFile(String fileName) {
 		JSONArray cocktails = new JSONArray();
 		for (Cocktail cocktail : mCocktails) {
 			JSONObject obj = new JSONObject();
@@ -398,16 +388,10 @@ public class CocktailsAndQuiz {
 			answer = quizCocktail.getPohar();
 			validate(ref, answer);
 
-			ref = refCocktail.getDiszites();
-			answer = quizCocktail.getDiszites();
-			validate(ref, answer);
-
 			ref = refCocktail.getFajta();
 			answer = quizCocktail.getFajta();
 			validate(ref, answer);
 		}
-		new QuizResult(this);
-		clearQuizCocktails();
 	}
 
 	public String getGoodCocktailsResult() {
@@ -425,6 +409,14 @@ public class CocktailsAndQuiz {
 				100.0 * getNofGoodAnswers() /
 				(getNofGoodAnswers()+getNofWrongAnswers()));
 	}
+	
+	public ArrayList<Integer> getQuestions() {
+		ArrayList<Integer> ret = new ArrayList<Integer>();
+		for (int i = 1; i <= maxQuestions; i++) {
+			ret.add(i);
+		}
+		return ret;
+	}
 
 	private void validate(String ref, String answer) {
 		if (ref.equals(answer)) {
@@ -434,16 +426,5 @@ public class CocktailsAndQuiz {
 		}
 	}
 
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(new Runnable() {
-
-			@Override
-			public void run() {
-				CocktailsAndQuiz c = new CocktailsAndQuiz();
-				c.startGui();
-			}
-		});
-
-	}
 
 }

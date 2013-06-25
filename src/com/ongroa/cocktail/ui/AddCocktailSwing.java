@@ -16,9 +16,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import com.ongroa.cocktail.Cocktail;
-import com.ongroa.cocktail.CocktailsAndQuiz;
-import com.ongroa.cocktail.Osszetevo;
+import com.ongroa.cocktails.Cocktail;
+import com.ongroa.cocktails.CocktailsAndQuiz;
+import com.ongroa.cocktails.Osszetevo;
 
 @SuppressWarnings("serial")
 public class AddCocktailSwing
@@ -26,7 +26,7 @@ extends JFrame
 implements ActionListener {
 
 	private CocktailsAndQuiz mMain;
-	private int MAX_NOF_COCKTAILS = 9;
+	private int MAX_NOF_OSSZETEVO = 9;
 	private int quizIndex;
 	private List<Integer> idxs;
 
@@ -55,7 +55,7 @@ implements ActionListener {
 			idxs = mMain.pickRandomCocktails();
 			textName.setText(mMain.getCocktails().
 					get(idxs.get(quizIndex)).getName());
-//			System.out.println(mMain.getCocktails().get(idxs.get(quizIndex)));
+			//			System.out.println(mMain.getCocktails().get(idxs.get(quizIndex)));
 		}
 		pack();
 	}
@@ -148,7 +148,7 @@ implements ActionListener {
 		panel.add(cbPohar);
 		panelCenter.add(panel);
 
-		for (int i = 0; i < MAX_NOF_COCKTAILS; i++) {
+		for (int i = 0; i < MAX_NOF_OSSZETEVO; i++) {
 			JPanel panelCocktail = new JPanel();
 			panelCocktail.setLayout(new FlowLayout(FlowLayout.LEFT));
 			JComboBox<String> cbMennyiseg = new JComboBox<String>();
@@ -169,10 +169,12 @@ implements ActionListener {
 
 		panel = new JPanel();
 		panel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		panel.add(new JLabel(mMain.DISZITES));
 		cbDisz = new JComboBox<String>();
 		cbDisz.setEditable(editable);
-		panel.add(cbDisz);
+		if (mMain.getMode() == CocktailsAndQuiz.ADD_MODE) {
+			panel.add(new JLabel(mMain.DISZITES));
+			panel.add(cbDisz);
+		}
 		panelCenter.add(panel);
 
 		panel.add(new JLabel(mMain.FAJTA));
@@ -214,12 +216,14 @@ implements ActionListener {
 						mMain.getNofQuizCocktails()) {
 					this.dispose();
 					mMain.evaluateQuiz();
+					new QuizResult(mMain);
+					mMain.clearQuizCocktails();
 				} else {
 					quizIndex++;
 					clearComboBoxes();
 					textName.setText(mMain.getCocktails().
 							get(idxs.get(quizIndex)).getName());
-//					System.out.println(mMain.getCocktails().get(idxs.get(quizIndex)));
+					//					System.out.println(mMain.getCocktails().get(idxs.get(quizIndex)));
 					labelIdx.setText(quizIndex + 1 + ". koktél");
 				}
 			}
@@ -254,7 +258,7 @@ implements ActionListener {
 		cbPohar.setSelectedItem(cocktail.getPohar());
 		cbDisz.setSelectedItem(cocktail.getDiszites());
 		cbFajta.setSelectedItem(cocktail.getFajta());
-		for (int i = 0; i < MAX_NOF_COCKTAILS; i++) {
+		for (int i = 0; i < MAX_NOF_OSSZETEVO; i++) {
 			mOsszetevokUi.get(i).getCbMennyiseg().setSelectedItem("");
 			mOsszetevokUi.get(i).getCbName().setSelectedItem("");
 		}
@@ -299,7 +303,7 @@ implements ActionListener {
 		cocktail.setDiszites(cbDisz.getSelectedItem().toString());
 		cocktail.setFajta(cbFajta.getSelectedItem().toString());
 		int i = 0;
-		while (i < MAX_NOF_COCKTAILS &&
+		while (i < MAX_NOF_OSSZETEVO &&
 				! mOsszetevokUi.get(i).getCbName().getSelectedItem().
 				equals("") &&
 				! mOsszetevokUi.get(i).getCbMennyiseg().getSelectedItem().
@@ -323,7 +327,7 @@ implements ActionListener {
 		cocktail.setDiszites(cbDisz.getSelectedItem().toString());
 		cocktail.setFajta(cbFajta.getSelectedItem().toString());
 		int i = 0;
-		while (i < MAX_NOF_COCKTAILS &&
+		while (i < MAX_NOF_OSSZETEVO &&
 				! mOsszetevokUi.get(i).getCbName().getSelectedItem().
 				equals("") &&
 				! mOsszetevokUi.get(i).getCbMennyiseg().getSelectedItem().
@@ -344,7 +348,7 @@ implements ActionListener {
 		cbPohar.setSelectedIndex(0);
 		cbDisz.setSelectedIndex(0);
 		cbFajta.setSelectedIndex(0);
-		for (int i = 0; i < MAX_NOF_COCKTAILS; i++) {
+		for (int i = 0; i < MAX_NOF_OSSZETEVO; i++) {
 			mOsszetevokUi.get(i).getCbMennyiseg().setSelectedIndex(0);
 			mOsszetevokUi.get(i).getCbName().setSelectedIndex(0);
 		}

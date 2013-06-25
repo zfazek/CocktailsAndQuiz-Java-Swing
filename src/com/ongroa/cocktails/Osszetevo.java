@@ -1,7 +1,10 @@
-package com.ongroa.cocktail;
+package com.ongroa.cocktails;
 
-public class Osszetevo implements Comparable<Osszetevo> {
+import java.io.Serializable;
+
+public class Osszetevo implements Comparable<Osszetevo>, Serializable {
 	
+	private static final long serialVersionUID = 4343873930214654008L;
 	public static String MENNYISEG = "mennyiseg";
 	public static String UNIT = "unit";
 	public static String NAME = "name";
@@ -45,7 +48,7 @@ public class Osszetevo implements Comparable<Osszetevo> {
 
 	@Override
 	public String toString() {
-		String ret = String.format("\tÖsszetevő: %s %s\n",
+		String ret = String.format("\t%s %s\n",
 				mennyiseg, nev);
 		return ret;
 	}

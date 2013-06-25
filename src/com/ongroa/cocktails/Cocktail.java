@@ -1,13 +1,15 @@
-package com.ongroa.cocktail;
+package com.ongroa.cocktails;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class Cocktail {
+public class Cocktail implements Serializable {
 
+	private static final long serialVersionUID = -583890345982417049L;
 	public static final String NAME = "name";
 	public static final String ALAPSZESZ = "alapszesz";
 	public static final String POHAR = "pohar";
@@ -112,9 +114,9 @@ public class Cocktail {
 	@Override
 	public String toString() {
 		String ret = String.format(
-				"Nev: %s, \nAlapszesz: %s, \nPohar: %s, \nDiszites: %s, \nFajta: %s\n",
-				name, alapszesz, pohar, diszites, fajta);
-		ret += "Osszetevok:\n";
+				"%s \nAlapszesz: %s \nPohár: %s \nFajta: %s\n",
+				name, alapszesz, pohar, fajta);
+		ret += "Összetevők:\n";
 		for (Osszetevo o : osszetevok) {
 			ret += o.toString();
 		}
@@ -169,7 +171,7 @@ public class Cocktail {
 		Cocktail o = (Cocktail)obj;
 		return o.alapszesz.equals(this.alapszesz) &&
 				o.pohar.equals(this.pohar) &&
-				o.diszites.equals(this.diszites) &&
+//				o.diszites.equals(this.diszites) &&
 				o.fajta.equals(this.fajta) &&
 				isOsszetevokEquals(o.getOsszetevok(), this.getOsszetevok());
 	}

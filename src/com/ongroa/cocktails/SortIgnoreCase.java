@@ -1,4 +1,4 @@
-package com.ongroa.cocktail;
+package com.ongroa.cocktails;
 
 import java.util.Comparator;
 

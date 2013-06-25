@@ -10,9 +10,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
-import com.ongroa.cocktail.Cocktail;
-import com.ongroa.cocktail.CocktailsAndQuiz;
-import com.ongroa.cocktail.Osszetevo;
+import com.ongroa.cocktails.Cocktail;
+import com.ongroa.cocktails.CocktailsAndQuiz;
+import com.ongroa.cocktails.Osszetevo;
+
 
 @SuppressWarnings("serial")
 public class QuizResult extends JFrame {
@@ -101,7 +102,7 @@ public class QuizResult extends JFrame {
 			}
 
 			addEmptyLineToPanel(panel);
-			addToPanel(mMain.DISZITES, panel, refCocktail, quizCocktail);
+//			addToPanel(mMain.DISZITES, panel, refCocktail, quizCocktail);
 			addToPanel(mMain.FAJTA, panel, refCocktail, quizCocktail);
 			addEmptyLineToPanel(panel);
 		}
